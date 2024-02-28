@@ -78,8 +78,12 @@ mergeObjects([
  *    removeProperties({name: 'John', age: 30, city: 'New York'}, 'age') => {name: 'John', city: 'New York'}
  *
  */
-function removeProperties(/* obj, keys */) {
-  throw new Error('Not implemented');
+function removeProperties(obj, keys) {
+  const newObj = { ...obj };
+  keys.forEach((key) => {
+    delete newObj[`${key}`];
+  });
+  return newObj;
 }
 
 /**
@@ -94,9 +98,22 @@ function removeProperties(/* obj, keys */) {
  *    compareObjects({a: 1, b: 2}, {a: 1, b: 2}) => true
  *    compareObjects({a: 1, b: 2}, {a: 1, b: 3}) => false
  */
-function compareObjects(/* obj1, obj2 */) {
-  throw new Error('Not implemented');
+function compareObjects(obj1, obj2) {
+  const obj1Keys = Object.keys(obj1);
+  const obj2Keys = Object.keys(obj2);
+
+  if (obj1Keys.length !== obj2Keys.length) return false;
+
+  // for (const key of obj1Keys) {
+  //   if (obj1[key] !== obj2[key]) {
+  //     return false;
+  //   }
+  // }
+
+  return obj1Keys.every((key) => obj1[key] === obj2[key]);
 }
+// compareObjects({ a: 1, b: 2 }, { a: 1, b: 2 });
+// compareObjects({ a: 1, b: 2 }, { a: 1, b: 3 });
 
 /**
  * Checks if the source object is empty.
@@ -109,9 +126,12 @@ function compareObjects(/* obj1, obj2 */) {
  *    isEmptyObject({}) => true
  *    isEmptyObject({a: 1}) => false
  */
-function isEmptyObject(/* obj */) {
-  throw new Error('Not implemented');
+function isEmptyObject(obj) {
+  // console.log(!Object.keys(obj).length);
+  return !Object.keys(obj).length;
 }
+// isEmptyObject({});
+// isEmptyObject({ a: 1 });
 
 /**
  * Makes the source object immutable by preventing any changes to its properties.
