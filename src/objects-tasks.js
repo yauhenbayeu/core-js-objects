@@ -149,8 +149,9 @@ function isEmptyObject(obj) {
  *    immutableObj.newProp = 'new';
  *    console.log(immutableObj) => {a: 1, b: 2}
  */
-function makeImmutable(/* obj */) {
-  throw new Error('Not implemented');
+function makeImmutable(obj) {
+  const immutableObj = Object.freeze(obj);
+  return immutableObj;
 }
 
 /**
@@ -163,9 +164,33 @@ function makeImmutable(/* obj */) {
  *    makeWord({ a: [0, 1], b: [2, 3], c: [4, 5] }) => 'aabbcc'
  *    makeWord({ H:[0], e: [1], l: [2, 3, 8], o: [4, 6], W:[5], r:[7], d:[9]}) => 'HelloWorld'
  */
-function makeWord(/* lettersObject */) {
-  throw new Error('Not implemented');
+function makeWord(lettersObject) {
+  const entries = [];
+  let string = [];
+
+  //   Object.entries(lettersObject).forEach((arr) => {
+  //     const [letter, subArr] = [...arr];
+  //     [...subArr].forEach((index) => {
+  //       string.splice(index, 0, letter);
+  //     });
+  //   });
+
+  Object.entries(lettersObject).forEach(([letter, positions]) => {
+    positions.forEach((position) => {
+      entries.push({ letter, position });
+    });
+  });
+  // console.log(entries);
+
+  entries.sort((a, b) => a.position - b.position);
+
+  string = entries.map((entry) => entry.letter);
+
+  // console.log(string);
+
+  return string.join('');
 }
+// makeWord({ H: [0], e: [1], l: [2, 3, 8], o: [4, 6], W: [5], r: [7], d: [9] });
 
 /**
  * There is a queue for tickets to a popular movie.
@@ -181,8 +206,21 @@ function makeWord(/* lettersObject */) {
  *    sellTickets([25, 25, 50]) => true
  *    sellTickets([25, 100]) => false (The seller does not have enough money to give change.)
  */
-function sellTickets(/* queue */) {
-  throw new Error('Not implemented');
+function sellTickets(queue) {
+  const cost = 25;
+  let cash = 0;
+  let result = true;
+
+  queue.forEach((bill) => {
+    if (bill === cost) {
+      cash += 1;
+    } else {
+      const change = bill / cost;
+      result = cash > change - 1;
+    }
+  });
+
+  return result;
 }
 
 /**
