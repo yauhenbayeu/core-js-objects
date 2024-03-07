@@ -359,9 +359,36 @@ function sortCitiesArray(arr) {
  *    "Poland" => ["Lodz"]
  *   }
  */
-function group(/* array, keySelector, valueSelector */) {
-  throw new Error('Not implemented');
+function group(array, keySelector, valueSelector) {
+  const map = new Map();
+
+  array.forEach((item) => {
+    const key = keySelector(item);
+    const value = valueSelector(item);
+    // console.log(map.get(key));
+    // console.log(key);
+    // console.log(value);
+    if (map.get(key) !== undefined) {
+      map.get(key).push(value);
+    } else {
+      map.set(key, new Array(value));
+    }
+  });
+  // console.log(map);
+  return map;
 }
+// group(
+//   [
+//     { country: 'Belarus', city: 'Brest' },
+//     { country: 'Russia', city: 'Omsk' },
+//     { country: 'Russia', city: 'Samara' },
+//     { country: 'Belarus', city: 'Grodno' },
+//     { country: 'Belarus', city: 'Minsk' },
+//     { country: 'Poland', city: 'Lodz' },
+//   ],
+//   (item) => item.country,
+//   (item) => item.city
+// );
 
 /**
  * Css selectors builder
