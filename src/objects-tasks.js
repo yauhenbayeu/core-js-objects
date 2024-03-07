@@ -270,8 +270,8 @@ function getJSON(obj) {
  *    const r = fromJSON(Circle.prototype, '{"radius":10}');
  *
  */
-function fromJSON(/* proto, json */) {
-  throw new Error('Not implemented');
+function fromJSON(proto, json) {
+  return Object.setPrototypeOf(JSON.parse(json), proto);
 }
 
 /**
@@ -300,9 +300,34 @@ function fromJSON(/* proto, json */) {
  *      { country: 'Russia',  city: 'Saint Petersburg' }
  *    ]
  */
-function sortCitiesArray(/* arr */) {
-  throw new Error('Not implemented');
+function sortCitiesArray(arr) {
+  const sorted = arr.sort((a, b) => {
+    if (a.country.toUpperCase() < b.country.toUpperCase()) {
+      return -1;
+    }
+    if (a.country.toUpperCase() > b.country.toUpperCase()) {
+      return 1;
+    }
+
+    if (a.city.toUpperCase() < b.city.toUpperCase()) {
+      return -1;
+    }
+    if (a.city.toUpperCase() > b.city.toUpperCase()) {
+      return 1;
+    }
+
+    return 0;
+  });
+  return sorted;
 }
+// sortCitiesArray([
+//   { country: 'Russia', city: 'Moscow' },
+//   { country: 'Belarus', city: 'Minsk' },
+//   { country: 'Poland', city: 'Warsaw' },
+//   { country: 'Russia', city: 'Saint Petersburg' },
+//   { country: 'Poland', city: 'Krakow' },
+//   { country: 'Belarus', city: 'Brest' },
+// ]);
 
 /**
  * Groups elements of the specified array by key.
